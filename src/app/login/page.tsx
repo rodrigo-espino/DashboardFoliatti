@@ -32,13 +32,16 @@ export default function LoginPage() {
         //   title: "¡Bienvenido! 🎉",
         //   description: "Inicio de sesión exitoso",
         // })
+        console.log("Bienvenido")
         router.push("/dashboard/deposits")
       } else {
         // toast({
         //   title: "Error de autenticación",
         //   description: "Por favor verifica tus credenciales",
-        //   variant: "destructive",
+        //   variant: "destruct
+        // ive",
         // })
+        console.log("Error")
       }
     }, 1500)
   }
