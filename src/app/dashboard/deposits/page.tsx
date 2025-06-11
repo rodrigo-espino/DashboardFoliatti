@@ -1,11 +1,8 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { DepositStats } from "@/components/deposit-stats"
 import { DepositCharts } from "@/components/deposit-charts"
 import { DepositPrediction } from "@/components/deposit-prediction"
 import { Button } from "@/components/ui/button"
-import { Download, RefreshCw, Filter } from "lucide-react"
+import { Suspense } from "react"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,21 +25,34 @@ const itemVariants = {
   },
 }
 
+function LoadingCard() {
+  return (
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="animate-pulse">
+        <div className="h-6 bg-gray-200 rounded mb-4"></div>
+        <div className="h-32 bg-gray-100 rounded"></div>
+      </div>
+    </div>
+  )
+}
+
 export default function DepositsPage() {
   return (
-    <motion.div className="space-y-8" variants={containerVariants} initial="hidden" animate="visible">
+    <div className="space-y-8">
       {/* Header */}
-      <motion.div
+      <div
         className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-        variants={itemVariants}
       >
         <div>
           <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
             Dashboard de Depósitos
           </h1>
-          <p className="text-gray-600 mt-2">Análisis completo de depósitos y predicciones basadas en IA</p>
         </div>
-        <div className="flex gap-3">
+        {/* <div className="flex gap-3">
+          <Button variant="outline" className="hover:bg-blue-50">
+            <Plus className="mr-2 h-4 w-4" />
+            Nuevo Depósito
+          </Button>
           <Button variant="outline" className="hover:bg-blue-50">
             <Filter className="mr-2 h-4 w-4" />
             Filtros
@@ -55,23 +65,27 @@ export default function DepositsPage() {
             <Download className="mr-2 h-4 w-4" />
             Exportar
           </Button>
-        </div>
-      </motion.div>
+        </div> */}
+      </div>
 
       {/* Stats */}
-      <motion.div variants={itemVariants}>
-        <DepositStats />
-      </motion.div>
+      <div >
+        <Suspense fallback={<LoadingCard />}>
+          <DepositStats />
+        </Suspense>
+      </div>
 
       {/* Charts */}
-      <motion.div variants={itemVariants}>
+      <div >
         <DepositCharts />
-      </motion.div>
+      </div>
 
-      {/* Prediction */}
-      <motion.div variants={itemVariants}>
+      {/* Recent Deposits and Prediction */}
+      {/* <div className="grid gap-6 ">
+        <Suspense fallback={<LoadingCard />}>
+        </Suspense>
         <DepositPrediction />
-      </motion.div>
-    </motion.div>
+      </div> */}
+    </div>
   )
 }

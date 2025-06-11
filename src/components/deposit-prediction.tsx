@@ -46,7 +46,7 @@ export function DepositPrediction() {
     <Card className="border-0 hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="pb-4">
         <CardTitle className="text-xl font-bold text-gray-900 flex items-center gap-2">
-          🔮 Predicción de Depósitos
+          Predicción de Depósitos
         </CardTitle>
         <p className="text-sm text-gray-600">Análisis predictivo usando modelo SARIMA con intervalos de confianza</p>
       </CardHeader>

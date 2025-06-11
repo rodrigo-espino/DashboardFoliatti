@@ -11,30 +11,30 @@ export function DashboardSidebar({ className }: { className?: string }) {
   const pathname = usePathname()
 
   const routes = [
-    {
-      label: "Inicio",
-      icon: Home,
-      href: "/dashboard",
-      active: pathname === "/dashboard",
-    },
+    // {
+    //   label: "Inicio",
+    //   icon: Home,
+    //   href: "/dashboard",
+    //   active: pathname === "/dashboard",
+    // },
     {
       label: "Depósitos",
       icon: CreditCard,
       href: "/dashboard/deposits",
       active: pathname === "/dashboard/deposits",
     },
-    {
-      label: "Reportes",
-      icon: BarChart3,
-      href: "/dashboard/reports",
-      active: pathname === "/dashboard/reports",
-    },
-    {
-      label: "Configuración",
-      icon: Settings,
-      href: "/dashboard/settings",
-      active: pathname === "/dashboard/settings",
-    },
+    // {
+    //   label: "Reportes",
+    //   icon: BarChart3,
+    //   href: "/dashboard/reports",
+    //   active: pathname === "/dashboard/reports",
+    // },
+    // {
+    //   label: "Configuración",
+    //   icon: Settings,
+    //   href: "/dashboard/settings",
+    //   active: pathname === "/dashboard/settings",
+    // },
   ]
 
   return (
@@ -42,9 +42,6 @@ export function DashboardSidebar({ className }: { className?: string }) {
       <div className="flex h-full flex-col gap-2">
         <div className="flex h-16 items-center border-b bg-white/50 px-4">
           <Link href="/dashboard" className="flex items-center gap-3 transition-transform hover:scale-105">
-            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-2 rounded-lg shadow-lg">
-              <Building2 className="h-5 w-5 text-white" />
-            </div>
             <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
               Dashboard
             </span>

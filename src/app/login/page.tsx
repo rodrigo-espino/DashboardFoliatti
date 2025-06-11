@@ -32,7 +32,7 @@ export default function LoginPage() {
         //   title: "¡Bienvenido! 🎉",
         //   description: "Inicio de sesión exitoso",
         // })
-        router.push("/dashboard")
+        router.push("/dashboard/deposits")
       } else {
         // toast({
         //   title: "Error de autenticación",

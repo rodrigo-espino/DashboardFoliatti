@@ -17,22 +17,19 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { DashboardNav } from "@/components/dashboard-nav"
 
+import { logout } from "@/lib/auth"
+
 export function DashboardHeader() {
   const router = useRouter()
+  
 
-
-  const handleLogout = () => {
-    // toast({
-    //   title: "Sesión cerrada",
-    //   description: "Has cerrado sesión correctamente",
-    // })
-    router.push("/login")
+  const handleLogout = async () => {
+    await logout()
   }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
       <div className="flex h-16 items-center gap-4 px-4 md:px-6">
-        {/* Mobile menu */}
         <div className="flex items-center gap-2 md:hidden">
           <Sheet>
             <SheetTrigger asChild>
@@ -55,7 +52,6 @@ export function DashboardHeader() {
           </Sheet>
         </div>
 
-        {/* Desktop logo */}
         <div className="hidden md:flex md:items-center md:gap-3">
           <Link href="/dashboard" className="flex items-center gap-3 transition-transform hover:scale-105">
             <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-2 rounded-lg shadow-lg">
