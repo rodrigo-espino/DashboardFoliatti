@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart3, Building2, CreditCard, Home, Settings } from "lucide-react"
-
+// import { BarChart3, Building2, CreditCard, Home, Settings } from "lucide-react"
+import { CreditCard } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 

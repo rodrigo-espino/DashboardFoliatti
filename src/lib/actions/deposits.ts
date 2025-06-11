@@ -48,7 +48,7 @@ export async function getDepositStats(filters?: DateFilter): Promise<DepositsSta
 
         const avgPerDay = await sql `
         WITH CountPerDay AS (
-        SELECT COUNT(*) as countPerDay, "DATE" FROM transactions GROUP BY "DATE" ORDER BY "DATE" DESC
+        SELECT COUNT(*) as countPerDay, "DATE" FROM transactions GROUP BY "DATE" ORDER BY "DATE" ASC
         ${sql.unsafe(dateCondition)}
         )
         
@@ -81,7 +81,7 @@ export async function getTransactionsRecord(filters?: DateFilter): Promise<Chart
         AVG("Amount") as amount
         FROM transactions
         GROUP BY "DATE"
-        ORDER BY "DATE" DESC
+        ORDER BY "DATE" ASC
         `
         return result.map((row) => ({
             Date: row.DATE as string,
