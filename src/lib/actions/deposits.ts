@@ -80,6 +80,7 @@ export async function getTransactionsRecord(filters?: DateFilter): Promise<Chart
         COUNT(*) AS deposits,
         AVG("Amount") as amount
         FROM transactions
+        WHERE "DATE" > '2024-08-01'
         GROUP BY "DATE"
         ORDER BY "DATE" ASC
         `
