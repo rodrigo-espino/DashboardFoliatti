@@ -1,6 +1,7 @@
-import { redirect } from "next/navigation"
+import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
+  const router = useRouter()
   // Redirigir a la página de depósitos
-  redirect("/dashboard/deposits")
+  router.push('/login');
 }

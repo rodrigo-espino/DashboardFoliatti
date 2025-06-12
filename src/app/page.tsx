@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation"
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   // Redirigir a la página de login
-  redirect("/dashboard/deposits")
+  const router = useRouter();
+
+  router.push('/login');
+
 }
