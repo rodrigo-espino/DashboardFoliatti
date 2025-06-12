@@ -1,6 +1,8 @@
 import { DepositStats } from "@/components/deposit-stats"
 import { DepositCharts } from "@/components/deposit-charts"
 import { DepositPrediction } from "@/components/deposit-prediction"
+import { DepositPerDay } from "@/components/deposit-per-day"
+
 import { Suspense } from "react"
 
 function LoadingCard() {
@@ -59,11 +61,18 @@ export default function DepositsPage() {
       </div>
 
       {/* Recent Deposits and Prediction */}
-      <div className="grid gap-6 ">
+      {/* <div className="grid gap-6 ">
         <Suspense fallback={<LoadingCard />}>
         </Suspense>
         <DepositPrediction />
+      </div> */}
+
+      <div>
+        <Suspense fallback={<LoadingCard />}>
+          <DepositPerDay />
+        </Suspense>
       </div>
+
     </div>
   )
 }

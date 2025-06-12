@@ -25,6 +25,15 @@ export interface DateFilter {
     endDate? : string 
 }
 
+export interface WeekDayDeposits {
+    dayname: string
+    transactions: number
+}
+
+export interface DayMonthDeposits {
+    day: number
+    transactions: number
+}
 export async function getDepositStats(filters?: DateFilter): Promise<DepositsStats> {
     try{
         let dateCondition = ""
@@ -88,6 +97,71 @@ export async function getTransactionsRecord(filters?: DateFilter): Promise<Chart
             Date: row.DATE as string,
             Deposits: Number(row.deposits),
             Amount: Number(row.amount),
+    }))
+    }catch(error){
+        console.error("Error fetching chart data:", error)
+        throw new Error("Failed to fetch chart data")
+    }
+}
+
+export async function getAvgTransactionsWeekday(): Promise<WeekDayDeposits[]>{
+    try{
+        const result = await sql `
+        WITH daily_counts AS (
+        SELECT
+            DATE("DATE") AS day,
+            COUNT(*) AS num_transactions
+        FROM
+            transactions
+        GROUP BY
+            DATE("DATE")
+        )
+        SELECT
+        EXTRACT(DOW FROM day) AS weekday,         
+        TO_CHAR(day, 'Day') AS day_name,
+        ROUND(AVG(num_transactions), 2) AS avg_transactions
+        FROM
+        daily_counts
+        GROUP BY
+        weekday, day_name
+        ORDER BY
+        weekday;
+        `
+        return result.map((row) => ({
+            dayname: row.day_name as string,
+            transactions: Number(row.avg_transactions),
+    }))
+    }catch(error){
+        console.error("Error fetching chart data:", error)
+        throw new Error("Failed to fetch chart data")
+    }
+}
+
+export async function getAvgTransactionsDayMonth(): Promise<DayMonthDeposits[]>{
+    try{
+        const result = await sql `
+        WITH daily_counts AS (
+        SELECT
+            DATE("DATE") AS day,
+            COUNT(*) AS num_transactions
+        FROM
+            transactions
+        GROUP BY
+            DATE("DATE")
+        )
+        SELECT
+        EXTRACT(DAY FROM day) AS day_of_month,
+        ROUND(AVG(num_transactions), 2) AS avg_transactions
+        FROM
+        daily_counts
+        GROUP BY
+        day_of_month
+        ORDER BY
+        day_of_month;
+        `
+        return result.map((row) => ({
+            day: Number(row.day_of_month),
+            transactions: Number(row.avg_transactions),
     }))
     }catch(error){
         console.error("Error fetching chart data:", error)
