@@ -17,15 +17,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { DashboardNav } from "@/components/dashboard-nav"
 
-import { logout } from "@/lib/auth"
+
 
 export function DashboardHeader() {
   const router = useRouter()
   
 
-  const handleLogout = async () => {
-    await logout()
-  }
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
@@ -99,7 +97,7 @@ export function DashboardHeader() {
                 <span>Configuración</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout} className="text-red-600 hover:bg-red-50 hover:text-red-700">
+              <DropdownMenuItem className="text-red-600 hover:bg-red-50 hover:text-red-700">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Cerrar sesión</span>
               </DropdownMenuItem>
