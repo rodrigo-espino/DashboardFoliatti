@@ -57,7 +57,7 @@ export async function getDepositStats(filters?: DateFilter): Promise<DepositsSta
 
         const avgPerDay = await sql `
         WITH CountPerDay AS (
-        SELECT COUNT(*) as countPerDay, "DATE" FROM Transactions GROUP BY "DATE" ORDER BY "DATE" ASC
+        SELECT COUNT(*) as countPerDay, "DATE" FROM "Transactions" GROUP BY "DATE" ORDER BY "DATE" ASC
         ${sql.unsafe(dateCondition)}
         )
         
