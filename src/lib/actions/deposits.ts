@@ -27,12 +27,12 @@ export interface DateFilter {
 
 export interface WeekDayDeposits {
     dayname: string
-    Transactions: number
+    transactions: number
 }
 
 export interface DayMonthDeposits {
     day: number
-    Transactions: number
+    transactions: number
 }
 export async function getDepositStats(filters?: DateFilter): Promise<DepositsStats> {
     try{
@@ -109,7 +109,7 @@ export async function getAvgTransactionsWeekday(): Promise<WeekDayDeposits[]>{
         WITH daily_counts AS (
         SELECT
             DATE("DATE") AS day,
-            COUNT(*) AS num_Transactions
+            COUNT(*) AS num_transactions
         FROM
             "Transactions"
         GROUP BY
@@ -118,7 +118,7 @@ export async function getAvgTransactionsWeekday(): Promise<WeekDayDeposits[]>{
         SELECT
         EXTRACT(DOW FROM day) AS weekday,         
         TO_CHAR(day, 'Day') AS day_name,
-        ROUND(AVG(num_Transactions), 2) AS avg_Transactions
+        ROUND(AVG(num_transactions), 2) AS avg_transactions
         FROM
         daily_counts
         GROUP BY
@@ -128,7 +128,7 @@ export async function getAvgTransactionsWeekday(): Promise<WeekDayDeposits[]>{
         `
         return result.map((row) => ({
             dayname: row.day_name as string,
-            Transactions: Number(row.avg_Transactions),
+            transactions: Number(row.avg_transactions),
     }))
     }catch(error){
         console.error("Error fetching chart data:", error)
@@ -142,7 +142,7 @@ export async function getAvgTransactionsDayMonth(): Promise<DayMonthDeposits[]>{
         WITH daily_counts AS (
         SELECT
             DATE("DATE") AS day,
-            COUNT(*) AS num_Transactions
+            COUNT(*) AS num_transactions
         FROM
             "Transactions"
         GROUP BY
@@ -150,7 +150,7 @@ export async function getAvgTransactionsDayMonth(): Promise<DayMonthDeposits[]>{
         )
         SELECT
         EXTRACT(DAY FROM day) AS day_of_month,
-        ROUND(AVG(num_Transactions), 2) AS avg_Transactions
+        ROUND(AVG(num_transactions), 2) AS avg_transactions
         FROM
         daily_counts
         GROUP BY
@@ -160,7 +160,7 @@ export async function getAvgTransactionsDayMonth(): Promise<DayMonthDeposits[]>{
         `
         return result.map((row) => ({
             day: Number(row.day_of_month),
-            Transactions: Number(row.avg_Transactions),
+            transactions: Number(row.avg_transactions),
     }))
     }catch(error){
         console.error("Error fetching chart data:", error)
