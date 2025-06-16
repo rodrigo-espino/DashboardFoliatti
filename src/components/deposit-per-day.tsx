@@ -45,8 +45,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   }
   return null
 }
+interface Props {
+  startDate?: string
+  endDate?: string
+}
 
-export function DepositPerDay() {
+
+export function DepositPerDay({ startDate, endDate }: Props) {
 
     const [WeekDayData, setWeekDayData] = useState<WeekDayDeposits[]>([]);
     const [DayMonthData, setDayMonthData] = useState<DayMonthDeposits[]>([]);
@@ -57,8 +62,8 @@ export function DepositPerDay() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const dataWeekDay = await getAvgTransactionsWeekday()
-        const dataDayMonth = await getAvgTransactionsDayMonth()
+        const dataWeekDay = await getAvgTransactionsWeekday(startDate, endDate)
+        const dataDayMonth = await getAvgTransactionsDayMonth(startDate, endDate)
 
         setWeekDayData(dataWeekDay)
         setDayMonthData(dataDayMonth)
@@ -72,7 +77,7 @@ export function DepositPerDay() {
     }
 
     fetchData()
-  }, [])
+  }, [startDate, endDate])
 
   if (loading) {
     return (

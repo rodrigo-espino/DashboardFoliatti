@@ -29,8 +29,12 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   }
   return null
 }
+interface Props {
+  startDate?: string
+  endDate?: string
+}
 
-export function DepositCharts() {
+export function DepositCharts({ startDate, endDate }: Props) {
   const [chartData, setChartData] = useState<ChartData[]>([])
   const [loading, setLoading] = useState(true)
   
@@ -45,7 +49,7 @@ export function DepositCharts() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getTransactionsRecord()
+        const data = await getTransactionsRecord(startDate, endDate)
 
         // === Tendencia para "Deposits"
         const xTimestamps = data.map((d) => new Date(d.Date).getTime())
@@ -75,7 +79,7 @@ export function DepositCharts() {
     }
 
     fetchData()
-  }, [])
+  }, [startDate, endDate])
 
   if (loading) {
     return (

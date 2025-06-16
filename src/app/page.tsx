@@ -1,12 +1,22 @@
-"use client"
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-export default function Home() {
-  // Redirigir a la página de login
+"use client";
+
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function HomePage() {
+  const { data: session, status } = useSession();
   const router = useRouter();
 
-useEffect(() => {
-    router.push('/login'); // Redirige a /login después del renderizado
-  }, [router]);
-  
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status]);
+
+  return (
+    <div>
+      {status === "loading" ? "Cargando..." : "Bienvenido"}
+    </div>
+  );
 }

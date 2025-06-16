@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { signOut, useSession } from "next-auth/react"
 import { Building2, LogOut, Menu, User, Bell } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -17,12 +18,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { DashboardNav } from "@/components/dashboard-nav"
 
-
-
 export function DashboardHeader() {
   const router = useRouter()
-  
+  const { data: session } = useSession()
 
+const handleLogout = async () => {
+  await signOut({ redirect: false });
+  router.push("/login");
+};
 
 
   return (
@@ -64,11 +67,11 @@ export function DashboardHeader() {
         {/* Right side */}
         <div className="flex flex-1 items-center justify-end gap-3">
           {/* Notifications */}
-          <Button variant="ghost" size="icon" className="relative hover:bg-blue-50">
+          {/* <Button variant="ghost" size="icon" className="relative hover:bg-blue-50">
             <Bell className="h-5 w-5" />
             <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 text-xs bg-red-500 hover:bg-red-500">3</Badge>
             <span className="sr-only">Notifications</span>
-          </Button>
+          </Button> */}
 
           {/* User menu */}
           <DropdownMenu>
@@ -84,20 +87,25 @@ export function DashboardHeader() {
             <DropdownMenuContent align="end" className="w-56 bg-white/95 backdrop-blur-sm">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">Usuario</p>
-                  <p className="text-xs leading-none text-muted-foreground">usuario@empresa.com</p>
+                  <p className="text-sm font-medium leading-none">{session?.user?.name || "Usuario"}</p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {/* {session?.user?.email || "usuario@empresa.com"} */}
+                  </p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="hover:bg-blue-50">
+              {/* <DropdownMenuItem className="hover:bg-blue-50">
                 <User className="mr-2 h-4 w-4" />
                 <span>Perfil</span>
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:bg-blue-50">
                 <span>Configuración</span>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600 hover:bg-red-50 hover:text-red-700">
+              <DropdownMenuItem 
+                className="text-red-600 hover:bg-red-50 hover:text-red-700 cursor-pointer"
+                onClick={handleLogout}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Cerrar sesión</span>
               </DropdownMenuItem>

@@ -1,48 +1,68 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { Building2, Lock, Mail, Eye, EyeOff } from "lucide-react"
+import type React from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
+import { Building2, Lock, Mail, Eye, EyeOff } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-// import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+
 export default function LoginPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
-//   const { toast } = useToast()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  // Redirigir si ya está autenticado
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard/deposits");
+    }
+  }, [status, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
-    // Simulación de autenticación
-    setTimeout(() => {
-      setIsLoading(false)
-      if (email && password) {
-        // toast({
-        //   title: "¡Bienvenido! 🎉",
-        //   description: "Inicio de sesión exitoso",
-        // })
-        console.log("Bienvenido")
-        router.push("/dashboard/deposits")
-      } else {
-        // toast({
-        //   title: "Error de autenticación",
-        //   description: "Por favor verifica tus credenciales",
-        //   variant: "destruct
-        // ive",
-        // })
-        console.log("Error")
-      }
-    }, 1500)
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    setIsLoading(false);
+
+    if (result?.error) {
+      setError("Credenciales inválidas. Por favor, verifica tu correo y contraseña.");
+    } else {
+      router.push("/dashboard/deposits");
+    }
+  };
+
+  // Mostrar loading mientras verifica la sesión
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Si ya está autenticado, no mostrar nada (se redirigirá)
+  if (status === "authenticated") {
+    return null;
   }
 
   return (
@@ -69,6 +89,11 @@ export default function LoginPage() {
 
         <CardContent className="space-y-6">
           <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg border border-red-200">
+                {error}
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">
                 Correo Electrónico
@@ -83,6 +108,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -92,7 +118,10 @@ export default function LoginPage() {
                 <Label htmlFor="password" className="text-sm font-medium">
                   Contraseña
                 </Label>
-                <Link href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-colors hover:underline">
+                <Link
+                  href="#"
+                  className="text-sm text-blue-600 hover:text-blue-800 transition-colors hover:underline"
+                >
                   ¿Olvidaste tu contraseña?
                 </Link>
               </div>
@@ -105,11 +134,13 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-blue-600 transition-colors"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -136,12 +167,15 @@ export default function LoginPage() {
         <CardFooter className="flex flex-col pt-6">
           <div className="text-center text-sm text-muted-foreground">
             ¿No tienes una cuenta?{" "}
-            <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors hover:underline font-medium">
+            <Link
+              href="#"
+              className="text-blue-600 hover:text-blue-800 transition-colors hover:underline font-medium"
+            >
               Contacta a tu administrador
             </Link>
           </div>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

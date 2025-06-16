@@ -11,30 +11,14 @@ export function DashboardNav({ className }: { className?: string }) {
   const pathname = usePathname()
 
   const routes = [
-    {
-      label: "Inicio",
-      icon: Home,
-      href: "/dashboard",
-      active: pathname === "/dashboard",
-    },
+
     {
       label: "Depósitos",
       icon: CreditCard,
       href: "/dashboard/deposits",
       active: pathname === "/dashboard/deposits",
     },
-    {
-      label: "Reportes",
-      icon: BarChart3,
-      href: "/dashboard/reports",
-      active: pathname === "/dashboard/reports",
-    },
-    {
-      label: "Configuración",
-      icon: Settings,
-      href: "/dashboard/settings",
-      active: pathname === "/dashboard/settings",
-    },
+ 
   ]
 
   return (

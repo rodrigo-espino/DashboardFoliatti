@@ -1,11 +1,35 @@
-// import { Building, CreditCard, DollarSign, TrendingUp } from "lucide-react"
+"use client"
+
+import { useEffect, useState } from "react"
 import { Building, CreditCard, DollarSign } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
 import { getDepositStats } from "@/lib/actions/deposits"
 
-export async function DepositStats({ filters }: { filters?: any }) {
-  const stats = await getDepositStats()
+interface Props {
+  startDate?: string
+  endDate?: string
+}
+
+export function DepositStats({ startDate, endDate }: Props) {
+  const [stats, setStats] = useState<{
+    totalDeposits: number
+    averageDepositsPerDay: number
+    averageAmount: number
+  } | null>(null)
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      const data = await getDepositStats(startDate, endDate)
+      setStats(data)
+    }
+
+    fetchStats()
+  }, [startDate, endDate])
+
+  if (!stats) {
+    return <p className="text-gray-500 text-sm">Cargando estadísticas...</p>
+  }
+
   const statsData = [
     {
       title: "Total de depósitos",
@@ -13,7 +37,6 @@ export async function DepositStats({ filters }: { filters?: any }) {
       icon: Building,
       gradient: "from-blue-500 to-blue-600",
       bgGradient: "from-blue-50 to-blue-100",
-
     },
     {
       title: "Promedio de depósitos por día",
@@ -21,20 +44,19 @@ export async function DepositStats({ filters }: { filters?: any }) {
       icon: CreditCard,
       gradient: "from-emerald-500 to-emerald-600",
       bgGradient: "from-emerald-50 to-emerald-100",
-
-    }, 
+    },
     {
       title: "Promedio de Monto",
       value: `$${stats.averageAmount.toFixed(2)}`,
       icon: DollarSign,
       gradient: "from-purple-500 to-purple-600",
       bgGradient: "from-purple-50 to-purple-100",
-
-    }
+    },
   ]
+
   return (
     <div className="grid gap-6 md:grid-cols-3">
-      {statsData.map((stat, index) => (
+      {statsData.map((stat) => (
         <Card
           key={stat.title}
           className="relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 bg-white"
@@ -48,8 +70,6 @@ export async function DepositStats({ filters }: { filters?: any }) {
           </CardHeader>
           <CardContent className="relative">
             <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-            <div className="flex items-center text-sm">
-            </div>
           </CardContent>
         </Card>
       ))}
