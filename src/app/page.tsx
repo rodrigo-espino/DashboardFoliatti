@@ -12,6 +12,9 @@ export default function HomePage() {
     if (status === "authenticated") {
       router.push("/dashboard");
     }
+    else{
+      router.push("/login");
+    }
   }, [status]);
 
   return (
