@@ -18,6 +18,12 @@ export function DashboardNav({ className }: { className?: string }) {
       href: "/dashboard/deposits",
       active: pathname === "/dashboard/deposits",
     },
+    {
+      label: "Métricas",
+      icon: BarChart3,
+      href: "/dashboard/metrics",
+      active: pathname === "/dashboard/metrics",
+    }
  
   ]
 

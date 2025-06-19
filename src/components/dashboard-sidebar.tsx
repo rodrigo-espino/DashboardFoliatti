@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-// import { BarChart3, Building2, CreditCard, Home, Settings } from "lucide-react"
-import { CreditCard } from "lucide-react"
+import { BarChart3, Building2, CreditCard, Home, Settings } from "lucide-react"
+// import { CreditCard } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
@@ -23,12 +23,12 @@ export function DashboardSidebar({ className }: { className?: string }) {
       href: "/dashboard/deposits",
       active: pathname === "/dashboard/deposits",
     },
-    // {
-    //   label: "Reportes",
-    //   icon: BarChart3,
-    //   href: "/dashboard/reports",
-    //   active: pathname === "/dashboard/reports",
-    // },
+    {
+      label: "Métricas",
+      icon: BarChart3,
+      href: "/dashboard/metrics",
+      active: pathname === "/dashboard/metrics",
+    },
     // {
     //   label: "Configuración",
     //   icon: Settings,
