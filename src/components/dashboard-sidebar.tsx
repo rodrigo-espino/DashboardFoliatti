@@ -29,6 +29,12 @@ export function DashboardSidebar({ className }: { className?: string }) {
       href: "/dashboard/metrics",
       active: pathname === "/dashboard/metrics",
     },
+    {
+      label: "Google Analytics",
+      icon: BarChart3,
+      href: "/dashboard/google-analytics",
+      active: pathname === "/dashboard/google-analytics",
+    }
     // {
     //   label: "Configuración",
     //   icon: Settings,

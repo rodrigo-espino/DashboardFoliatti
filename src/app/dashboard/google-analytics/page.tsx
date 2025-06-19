@@ -1,11 +1,5 @@
-import React from 'react'
+import AnalyticsDashboard from "@/components/analytics-dashboard (1)"
 
-const page = () => {
-  return (
-    <div>
-        
-    </div>
-  )
-}
-
-export default page
+export default function Page() {
+  return <AnalyticsDashboard />
+  }

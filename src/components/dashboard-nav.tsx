@@ -23,6 +23,12 @@ export function DashboardNav({ className }: { className?: string }) {
       icon: BarChart3,
       href: "/dashboard/metrics",
       active: pathname === "/dashboard/metrics",
+    },
+    {
+      label: "Google Analytics",
+      icon: BarChart3,
+      href: "/dashboard/google-analytics",
+      active: pathname === "/dashboard/google-analytics",
     }
  
   ]
