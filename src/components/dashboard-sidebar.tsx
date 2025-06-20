@@ -48,7 +48,7 @@ export function DashboardSidebar({ className }: { className?: string }) {
       <div className="flex h-full flex-col gap-2">
         <div className="flex h-16 items-center border-b bg-white/50 px-4">
           <Link href="/dashboard" className="flex items-center gap-3 transition-transform hover:scale-105">
-            <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            <span className="text-lg font-bold bg-gradient-to-r from-violet-900 to-purple-700 bg-clip-text text-transparent">
               Dashboard
             </span>
           </Link>
@@ -63,8 +63,8 @@ export function DashboardSidebar({ className }: { className?: string }) {
                 className={cn(
                   "justify-start h-11 transition-all duration-200",
                   route.active
-                    ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg hover:from-blue-700 hover:to-cyan-700"
-                    : "hover:bg-blue-50 hover:text-blue-700 text-gray-700",
+                    ? "bg-gradient-to-r from-violet-900 to-purple-700 text-white shadow-lg hover:from-violet-900 hover:to-purple-700"
+                    : "hover:bg-blue-50 hover:text-violet-900 text-gray-700",
                 )}
               >
                 <Link href={route.href} className="flex items-center">

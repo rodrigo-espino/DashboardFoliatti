@@ -41,10 +41,10 @@ const handleLogout = async () => {
             </SheetTrigger>
             <SheetContent side="left" className="w-64 pr-0 bg-white">
               <div className="flex items-center gap-2 border-b pb-4 pt-2">
-                <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-2 rounded-lg">
+                <div className="bg-gradient-to-r from-violet-900 to-purple-600 p-2 rounded-lg">
                   <Building2 className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                <span className="text-lg font-semibold bg-gradient-to-r from-violet-900 to-purple-600 bg-clip-text text-transparent">
                   Dashboard
                 </span>
               </div>
@@ -55,10 +55,10 @@ const handleLogout = async () => {
 
         <div className="hidden md:flex md:items-center md:gap-3">
           <Link href="/dashboard" className="flex items-center gap-3 transition-transform hover:scale-105">
-            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-2 rounded-lg shadow-lg">
+            <div className="bg-gradient-to-r from-violet-900 to-purple-600 p-2 rounded-lg shadow-lg">
               <Building2 className="h-6 w-6 text-white" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-violet-900 to-purple-700 bg-clip-text text-transparent">
               Dashboard
             </span>
           </Link>
@@ -80,7 +80,7 @@ const handleLogout = async () => {
                 variant="ghost"
                 className="relative h-10 w-10 rounded-full bg-gradient-to-r from-blue-100 to-cyan-100 hover:from-blue-200 hover:to-cyan-200 transition-all duration-200"
               >
-                <User className="h-5 w-5 text-blue-700" />
+                <User className="h-5 w-5 text-vilet-900" />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
